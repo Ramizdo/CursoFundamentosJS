@@ -1,4 +1,4 @@
-var nombre = "Douglas", apellido = "Ramirez";
+var nombre = 'Douglas', apellido = "Ramirez";
 
 var nombreEnMayusculas = nombre.toUpperCase();
 
@@ -14,3 +14,5 @@ var nombreCompleto2 = `${nombre} ${apellido}`;
 
 var str = nombre.charAt(1) + nombre.charAt(2);
 var str2 = nombre.substr(1, 3);
+
+var ultimaLetraDelNombre = nombre.charAt(nombre.length-1);
