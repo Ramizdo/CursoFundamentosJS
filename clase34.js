@@ -1,4 +1,5 @@
 
+const btnInfo = document.getElementById('btnInfo')
 const celeste = document.getElementById('celeste')
 const violeta = document.getElementById('violeta')
 const naranja = document.getElementById('naranja')
@@ -7,8 +8,10 @@ const verde = document.getElementById('verde')
 const btnEmpezar = document.getElementById('btnEmpezar')
 const ULTIMO_NIVEL = 10
 
+
 class Juego {
     constructor() {
+        this.inicializar = this.inicializar.bind(this)
         this.inicializar()
         this.generarSecuencia()
         setTimeout(this.siguienteNivel, 500)
@@ -17,13 +20,21 @@ class Juego {
     inicializar() {
         this.siguienteNivel = this.siguienteNivel.bind(this)
         this.elegirColor = this.elegirColor.bind(this)
-        btnEmpezar.classList.add('hide')
+        this.toggleBtnEmpezar()
         this.nivel = 1
         this.colores = {
             celeste,
             violeta,
             naranja,
             verde
+        }
+    }
+
+    toggleBtnEmpezar() {
+        if (btnEmpezar.classList.contains("hide")){
+            btnEmpezar.classList.remove("hide")
+        } else {
+            btnEmpezar.classList.add('hide')
         }
     }
 
@@ -104,15 +115,36 @@ class Juego {
 
                 this.eliminarEventosClick()
                 if (this.nivel === (ULTIMO_NIVEL + 1)){
-                    //Gano
+                    this.ganoElJuego()
                 } else {
                     setTimeout(this.siguienteNivel, 1000)
                 }
             }
         } else {
-            //Perdio
+            this.perdioElJuego()
         }
     }
+
+    ganoElJuego() {
+        swal("FELICIDADES", "GANASTE EL JUEGO", "success")
+        .then(this.inicializar)
+    }
+
+    perdioElJuego() {
+        swal("PERDISTE", "INTENTA NUEVAMENTE", "error")
+        .then(() => {
+            this.eliminarEventosClick()
+            this.inicializar()
+        })
+    }
+}
+
+function gameInfo() {
+    swal ({
+        icon: "info",
+        title: "SIMON DICE",
+        text: "Memorice la secuencia en cada ronda. Buena suerte"
+    })
 }
 
 function empezarJuego() {
